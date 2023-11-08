@@ -1,0 +1,59 @@
+<div class="container">
+  <div id="carouselExampleIndicators" class="carousel slide">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://wallpapercave.com/wp/wp3376127.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://images.creativemarket.com/0.1.0/ps/7353029/1820/1213/m1/fpnw/wm1/kiwikc0o9yejexpzwzylxsuy30gsti4hjy5uo9ctmct07xumbwzebvxnoipkfdqc-.jpg?1574572852&s=e825fe743ce9f7c0252aac0e13870e92"
+          class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img
+          src="http://3.bp.blogspot.com/-_5VUZ9I1Djo/Tapq_iYrrJI/AAAAAAAABVA/8u5mMeVdJWw/s1600/food-wallpapers-0007.jpg"
+          class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- --------------------- carts ---------------------------- -->
+  <div class="container mt-2">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div *ngFor="let food of foodData" class="col mb-4">
+        <div class="card h-100">
+          <img [src]="food.image" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{food.name}}</h5>
+          </div>
+          <div class="card-footer d-flex align-items-center justify-content-between">
+            <small class="text-body-secondary">&#x20b9;{{food.price}}</small>
+            <button *ngIf="!food.isShowInDc"  type="button" class="btn btn-outline-primary btn-sm" (click)="addToCartHandler(food)">Add to Cart</button>
+            <div *ngIf="food.isShowInDc" class="d-flex align-items-center">
+              <button class="btn btn-primary btn-sm quantity-button" (click)="decrementQnty(food)">-</button>
+              <span class="mx-2 quantity-value">{{ food.quantity }}</span>
+              <button class="btn btn-primary btn-sm quantity-button" (click)="incrementQnty(food)" >+</button> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

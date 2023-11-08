@@ -1,0 +1,78 @@
+<nav class="navbar fixed-top navbar-expand-lg  navcolor">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/"><img class=""
+        src="https://icon-library.com/images/food-app-icon/food-app-icon-0.jpg" routerLink="/" alt="Logo"
+        class="logo"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item  previusBtn">
+          <a class="nav-link active" aria-current="page" routerLink="/previous">Previous Order</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">
+            <img (click)="openModal(myModalContent)"
+              src="http://www.pngplay.com/wp-content/uploads/1/Shopping-Cart-PNG-Royalty-Free-Photo.png" alt="cart"
+              class="cart">
+            <span *ngIf="PopUpCartData.length!==0"
+              class="badge rounded-pill badge-notification bg-danger">{{totalProductCount}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div [style.display]="buyModalVisible ? 'block' : 'none'" id="buynowmodal" class="buymodal">
+  <h1>Order is Completed..!</h1>
+  <p>Thanks for Order</p>
+  <button (click)="closeBuyModal()">Close</button>
+</div>
+<ng-template #myModalContent let-modal>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable m-0">
+    <div class="modal-content d-flex flex-column h-100">
+      <div class="modal-header bg-primary text-white">
+        <h4 class="modal-title">{{ PopUpCartData.length === 0 ? 'Cart is Empty' : 'Cart Details' }}</h4>
+        <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body flex-grow-1 overflow-auto">
+        <ng-container *ngIf="PopUpCartData.length === 0">
+          <p class="text-center text-muted">Add products to the cart.</p>
+        </ng-container>
+        <div class="d-flex flex-column align-items-center">
+          <div class="row border-bottom product-item" *ngFor="let product of PopUpCartData; let index = index">
+            <div class="col-6 col-md-3 d-flex justify-content-center align-items-center mb-2">
+              <img [src]="product.image" class="img-fluid product-image" alt="Product Image">
+            </div>
+            <div class="col-6 col-md-3 d-flex flex-column justify-content-center align-items-center mb-2">
+              <p class="text-dark mb-0 product-name">{{ product.name }}</p>
+            </div>
+            <div class="col-6 col-md-3 d-flex flex-column justify-content-center align-items-center mb-2">
+              <div class="quantity-controls d-flex flex-column align-items-center">
+                <span class="text-muted mb-1 small">Qty</span>
+                <div class="d-flex align-items-center">
+                  <button class="btn btn-primary btn-sm quantity-button" (click)="decrementQnty(product)">-</button>
+                  <span class="mx-2 quantity-value">{{ product.quantity }}</span>
+                  <button class="btn btn-primary btn-sm quantity-button" (click)="incrementQnty(product)">+</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-md-3 d-flex flex-column justify-content-center align-items-center mb-2">
+              <p class="text-muted mb-0 small product-price">{{ product.productTotalPrice }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-light d-flex justify-content-between">
+        <p class="mb-0">Total Price: {{ totalPrice }}</p>
+        <button *ngIf="PopUpCartData.length !== 0" type="button" class="btn btn-success"
+          (click)="buyProduct()">Buy Now</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<router-outlet></router-outlet>
